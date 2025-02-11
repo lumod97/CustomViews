@@ -34,7 +34,7 @@ publishing {
         maven(MavenPublication) {
             groupId = 'com.github.lumod97'
             artifactId = 'CustomViews'
-            version = '1.0.1'
+            version = '2.0.7'
 
             afterEvaluate {
                 artifact("$buildDir/outputs/aar/${project.name}-release.aar")
