@@ -49,8 +49,8 @@ publishing {
 }
 
 dependencies {
-    implementation libs.annotation.jvm
-    implementation libs.fragment
-    implementation libs.viewpager2
-    implementation libs.google.material
+//    implementation libs.annotation.jvm
+//    implementation libs.fragment
+//    implementation libs.viewpager2
+//    implementation libs.google.material
 }
