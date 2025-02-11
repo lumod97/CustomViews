@@ -1,0 +1,56 @@
+plugins {
+    id 'com.android.library'
+    id 'maven-publish'
+}
+
+android {
+    compileSdk 34
+    namespace "com.github.lumod97.customviews"
+    defaultConfig {
+        minSdk 21
+        targetSdk 34
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        viewBinding true
+        buildConfig = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.github.lumod97'
+            artifactId = 'CustomViews'
+            version = '1.0.1'
+
+            afterEvaluate {
+                artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+            }
+
+            tasks.withType(PublishToMavenLocal).configureEach {
+                dependsOn("assembleRelease") // 🔥 Asegura que el .aar se genere antes de publicarlo
+            }
+
+        }
+    }
+}
+
+dependencies {
+    implementation libs.annotation.jvm
+    implementation libs.fragment
+    implementation libs.viewpager2
+    implementation libs.google.material
+}
