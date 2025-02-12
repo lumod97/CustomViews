@@ -54,7 +54,7 @@ public class ValidatorInputLayout extends FrameLayout {
 
     private void init(Context context) {
         binding = ValidatorInputLayoutBinding.inflate(LayoutInflater.from(context), this, true);
-        LayoutInflater.from(context).inflate(R.layout.validator_input_layout, this, true);
+//        LayoutInflater.from(context).inflate(R.layout.validator_input_layout, this, true);
     }
 
     public void setHint(String hint) {
