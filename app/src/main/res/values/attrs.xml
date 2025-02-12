@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ValidatorInputLayout">
-        <attr name="rightIconMode" format="integer" />
+        <attr name="rightIconMode" format="enum">
+            <enum name="none" value="0" />
+            <enum name="password_toggle" value="1" />
+            <enum name="clear_text" value="2" />
+            <enum name="custom" value="3" />
+        </attr>
         <attr name="btnClearImageResource" format="reference" />
         <attr name="clearButtonBackground" format="color" />
         <attr name="textInputIconDrawable" format="reference" />
@@ -12,5 +17,12 @@
         <attr name="showKeyboardIcon" format="boolean" />
         <attr name="threshold" format="integer" />
         <attr name="clearTextAndShowDropdown" format="boolean" />
+        <attr name="textInputType" format="enum">
+            <enum name="text" value="0" />
+            <enum name="number" value="1" />
+            <enum name="phone" value="2" />
+            <enum name="email" value="3" />
+            <enum name="password" value="4" />
+        </attr>
     </declare-styleable>
 </resources>

@@ -3,6 +3,7 @@ package com.myaconsultancy.customviews.ValidatorInputLayout;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.ContextThemeWrapper;
@@ -68,13 +69,15 @@ public class ValidatorInputLayout extends FrameLayout {
                 int threshold = a.getInt(R.styleable.ValidatorInputLayout_threshold, 3);
                 int btnClearImageResource = a.getResourceId(R.styleable.ValidatorInputLayout_btnClearImageResource, R.drawable.error_center_x);
                 int clearButtonBackground = a.getResourceId(R.styleable.ValidatorInputLayout_clearButtonBackground, R.color.float_transparent);
-                int endIconMode = a.getInt(R.styleable.ValidatorInputLayout_rightIconMode, TextInputLayout.END_ICON_CUSTOM);
+                int rightIconMode = a.getInt(R.styleable.ValidatorInputLayout_rightIconMode, TextInputLayout.END_ICON_NONE);
                 int textInputIconDrawable = a.getResourceId(R.styleable.ValidatorInputLayout_textInputIconDrawable, R.drawable.ic_keyboard);
-                boolean textInputHintEnabled = a.getBoolean(R.styleable.ValidatorInputLayout_textInputHintEnabled, true);
+                boolean textInputHintEnabled = a.getBoolean(R.styleable.ValidatorInputLayout_textInputHintEnabled, false);
                 boolean showDropdownOnFocus = a.getBoolean(R.styleable.ValidatorInputLayout_showDropdownOnFocus, false);
                 boolean showKeyboardOnFocus = a.getBoolean(R.styleable.ValidatorInputLayout_showKeyboardOnFocus, false);
                 boolean showKeyboardIcon = a.getBoolean(R.styleable.ValidatorInputLayout_showKeyboardIcon, false);
                 boolean clearTextAndShowDropdown = a.getBoolean(R.styleable.ValidatorInputLayout_clearTextAndShowDropdown, false);
+                int textInputType = a.getInt(R.styleable.ValidatorInputLayout_textInputType, 0);
+
 
                 // Aplicar los valores a la UI
                 if (binding.cboField != null) {
@@ -95,9 +98,9 @@ public class ValidatorInputLayout extends FrameLayout {
 //                binding.btnClear.setBackgroundResource(clearButtonBackground);
                 setClearButtonBackground(clearButtonBackground);
 //                binding.tilField.setEndIconMode(endIconMode);
-                setEndIconMode(endIconMode);
+                setEndIconMode(rightIconMode, textInputIconDrawable);
 //                binding.tilField.setEndIconDrawable(textInputIconDrawable);
-                setTextInputIconDrawable(textInputIconDrawable);
+
 
                 setTextInputHintEnabled(textInputHintEnabled);
                 setShowDropdownOnFocus(showDropdownOnFocus);
@@ -113,6 +116,23 @@ public class ValidatorInputLayout extends FrameLayout {
                 showKeyboardIcon(showKeyboardIcon);
 
                 clearTextAndShowDropdown(clearTextAndShowDropdown);
+                switch (textInputType) {
+                    case 1:
+                        binding.cboField.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        break;
+                    case 2:
+                        binding.cboField.setInputType(InputType.TYPE_CLASS_PHONE);
+                        break;
+                    case 3:
+                        binding.cboField.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                        break;
+                    case 4:
+                        binding.cboField.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        break;
+                    default:
+                        binding.cboField.setInputType(InputType.TYPE_CLASS_TEXT);
+                        break;
+                }
 //                if (showKeyboardIcon) {
 //                    binding.tilField.setEndIconMode(TextInputLayout.END_ICON_CUSTOM);
 //                    binding.tilField.setEndIconDrawable(R.drawable.ic_keyboard);
@@ -140,8 +160,23 @@ public class ValidatorInputLayout extends FrameLayout {
 //        binding.tilField.setHint(hint);
 //    }
 
-    public void setEndIconMode(int endIconMode) {
-        binding.tilField.setEndIconMode(endIconMode);
+    public void setEndIconMode(int rightIconMode, int textInputIconDrawable) {
+//        binding.tilField.setEndIconMode(endIconMode);
+        switch (rightIconMode) {
+            case 1:
+                binding.tilField.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
+                break;
+            case 2:
+                binding.tilField.setEndIconMode(TextInputLayout.END_ICON_CLEAR_TEXT);
+                break;
+            case 3:
+                binding.tilField.setEndIconMode(TextInputLayout.END_ICON_CUSTOM);
+                setTextInputIconDrawable(textInputIconDrawable);
+                break;
+            default:
+                binding.tilField.setEndIconMode(TextInputLayout.END_ICON_NONE);
+                break;
+        }
     }
 
 //    public void setClearIcon(int clearIcon) {
