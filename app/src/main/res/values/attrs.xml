@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ValidatorInputLayout">
+        <attr name="autocompleteTextView" format="boolean" />
         <attr name="rightIconMode" format="enum">
             <enum name="none" value="0" />
             <enum name="password_toggle" value="1" />
@@ -25,5 +26,8 @@
             <enum name="email" value="3" />
             <enum name="password" value="4" />
         </attr>
+        <attr name="validate" format="boolean" />
+        <attr name="emptyText" format="string" />
+        <attr name="invalidText" format="string" />
     </declare-styleable>
 </resources>

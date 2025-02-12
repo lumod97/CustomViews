@@ -2,6 +2,7 @@ package com.myaconsultancy.customviews.ValidatorInputLayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Build;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -12,13 +13,16 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 
 import com.github.lumod97.customviews.R;
 import com.github.lumod97.customviews.databinding.ValidatorInputLayoutBinding;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
@@ -28,7 +32,8 @@ public class ValidatorInputLayout extends FrameLayout {
     private OnItemSelectListener listener;
     private boolean showDropdown = false;
     private ValidatorInputLayoutBinding binding;
-    private String errorText = null;
+    private String emptyText = null;
+    private String invalidText = null;
 
     public ValidatorInputLayout(Context context) {
         super(context);
@@ -78,45 +83,37 @@ public class ValidatorInputLayout extends FrameLayout {
                 boolean showClearButton = a.getBoolean(R.styleable.ValidatorInputLayout_showClearButton, false);
                 boolean clearTextAndShowDropdown = a.getBoolean(R.styleable.ValidatorInputLayout_clearTextAndShowDropdown, false);
                 int textInputType = a.getInt(R.styleable.ValidatorInputLayout_textInputType, 0);
+                boolean autocompleteTextView = a.getBoolean(R.styleable.ValidatorInputLayout_autocompleteTextView, false);
+
+                String emptyText = a.getString(R.styleable.ValidatorInputLayout_emptyText);
+                String invalidText = a.getString(R.styleable.ValidatorInputLayout_invalidText);
+
+                this.emptyText = emptyText;
+                this.invalidText = invalidText;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    setValidators(emptyText, invalidText);
+                }
+
+                binding.cboField.setVisibility(autocompleteTextView ? View.VISIBLE : View.GONE);
+                binding.edtField.setVisibility(autocompleteTextView ? View.GONE : View.VISIBLE);
 
 
-                // Aplicar los valores a la UI
                 if (binding.cboField != null) {
                     if (hintText != null) {
                         setTextInputHint(hintText);
                     }
-//                    if (emptyError != null) {
-//                        binding.cboField.setError(emptyError);
-//                    }
                 }
 
-//                binding.cboField.setThreshold(threshold);
                 setTreshhold(threshold);
                 setShowClearButton(showClearButton);
-
-                // Aplicar otros atributos a la vista
-//                binding.btnClear.setImageResource(btnClearImageResource);
                 setBtnClearImageResource(btnClearImageResource);
-//                binding.btnClear.setBackgroundResource(clearButtonBackground);
                 setClearButtonBackground(clearButtonBackground);
-//                binding.tilField.setEndIconMode(endIconMode);
                 setEndIconMode(rightIconMode, textInputIconDrawable);
-//                binding.tilField.setEndIconDrawable(textInputIconDrawable);
-
-
                 setTextInputHintEnabled(textInputHintEnabled);
                 setShowDropdownOnFocus(showDropdownOnFocus);
-
-                // Opcionales, según lógica interna
-//                binding.cboField.setDropDownBackgroundResource(showDropdownOnFocus ? R.drawable.ic_dropdown : 0);
-
-//                if (showKeyboardOnFocus) {
-//                    showKeyboardOnFocus(true);
-//                }
                 showKeyboardOnFocus(showKeyboardOnFocus);
-
                 showKeyboardIcon(showKeyboardIcon);
-
                 clearTextAndShowDropdown(clearTextAndShowDropdown);
                 switch (textInputType) {
                     case 1:
@@ -135,36 +132,22 @@ public class ValidatorInputLayout extends FrameLayout {
                         binding.cboField.setInputType(InputType.TYPE_CLASS_TEXT);
                         break;
                 }
-//                if (showKeyboardIcon) {
-//                    binding.tilField.setEndIconMode(TextInputLayout.END_ICON_CUSTOM);
-//                    binding.tilField.setEndIconDrawable(R.drawable.ic_keyboard);
-//                } else {
-//                    binding.tilField.setEndIconMode(TextInputLayout.END_ICON_NONE);
-//                }
-
             } finally {
-                a.recycle(); // Liberar memoria
+                a.recycle();
             }
         }
     }
 
     private void init(Context context) {
-        // Crear un nuevo contexto con el tema de la librería
         ContextThemeWrapper themeWrapper = new ContextThemeWrapper(context, R.style.CustomViewsTheme);
-        // Inflar el layout usando el nuevo contexto
         binding = ValidatorInputLayoutBinding.inflate(LayoutInflater.from(themeWrapper), this, true);
     }
-
-//    public void setHint(String hint) {
-//        binding.tilField.setHint(hint);
-//    }
 
     public void setShowClearButton(boolean showClearButton) {
         binding.btnClear.setVisibility(showClearButton ? View.VISIBLE : View.GONE);
     }
 
     public void setEndIconMode(int rightIconMode, int textInputIconDrawable) {
-//        binding.tilField.setEndIconMode(endIconMode);
         switch (rightIconMode) {
             case 1:
                 binding.tilField.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
@@ -181,10 +164,6 @@ public class ValidatorInputLayout extends FrameLayout {
                 break;
         }
     }
-
-//    public void setClearIcon(int clearIcon) {
-//        binding.btnClear.setBackgroundResource(clearIcon);
-//    }
 
     public void setBtnClearImageResource(int endIconDrawable) {
         binding.btnClear.setImageResource(endIconDrawable);
@@ -272,60 +251,95 @@ public class ValidatorInputLayout extends FrameLayout {
         }
     }
 
-    private void setValidators(ValidationItem validationItem) {
-        MaterialAutoCompleteTextView control = validationItem.getControl();
-        String error = validationItem.getEmptyError();
-        control.addTextChangedListener(new TextWatcher() {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public void setValidators(String emptyText, String invalidText) {
+        binding.cboField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                control.setTextColor(getContext().getResources().getColor(R.color.black));
+                binding.cboField.setTextColor(getContext().getResources().getColor(R.color.black));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                TextInputLayout parent = getTextInputLayout(control);
                 if (s.toString().isEmpty()) {
-                    parent.setError(errorText == null ? errorText : error);
+                    binding.tilField.setError(emptyText == null ? emptyText : "Campo requerido");
                 } else {
-                    parent.setError(null);
-                    parent.setErrorEnabled(false);
+                    binding.tilField.setError(null);
+                    binding.tilField.setErrorEnabled(false);
                 }
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                validationItem.getClearButton().setVisibility(s.toString().isEmpty() ? View.GONE : View.VISIBLE);
+                binding.btnClear.setVisibility(s.toString().isEmpty() ? View.GONE : View.VISIBLE);
             }
         });
-
     }
 
-    private void setClearButtonClickListener(ValidationItem validationItem) {
-        validationItem.getClearButton().setOnClickListener(v -> {
-            validationItem.getControl().setText("");
-            validationItem.getClearButton().setVisibility(View.GONE);
-            validationItem.getControl().requestFocus();
-            validationItem.getControl().postDelayed(() -> {
-                validationItem.getControl().showDropDown();
+    public void setClearButtonClickListener(OnIconsClickListener listener) {
+        binding.btnClear.setOnClickListener(v -> {
+            binding.cboField.setText("");
+            binding.btnClear.setVisibility(View.GONE);
+            binding.cboField.requestFocus();
+            binding.cboField.postDelayed(() -> {
+                binding.cboField.showDropDown();
             }, 400);
+
+            if (listener != null) {
+                listener.onClearButtonClick();
+            }
         });
     }
 
-    private void setEndIconClickListener(MaterialAutoCompleteTextView control) {
-        TextInputLayout parent = getTextInputLayout(control);
-        parent.setEndIconOnClickListener(v -> {  // 🔹 Cambia setStartIconOnClickListener por setEndIconOnClickListener
+    public String getEmptyText(){
+        return emptyText;
+    }
+
+    public String getInvalidText(){
+        return invalidText;
+    }
+
+    public void setEndIconClickListener(OnIconsClickListener listener) {
+        binding.tilField.setEndIconOnClickListener(v -> {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-            control.setText(""); // Borra el texto
-            control.postDelayed(control::showDropDown, 400); // Muestra la lista desplegable
+            binding.cboField.setText("");
+            binding.cboField.postDelayed(binding.cboField::showDropDown, 400);
+
+            if (listener != null) {
+                listener.onEndIconClick();
+            }
         });
     }
 
     public void setOnItemClickListener(OnItemSelectListener listener) {
         binding.cboField.setOnItemClickListener((parent, view, position, id) -> {
-            ValidatorInputLayoutItem selectedItem = (ValidatorInputLayoutItem) parent.getItemAtPosition(position);
-            listener.onItemSelected(selectedItem);
+
+            Object selectedItem = parent.getItemAtPosition(position);
+
+            if (selectedItem instanceof ValidatorInputLayoutItem) {
+                listener.onItemSelected((ValidatorInputLayoutItem) selectedItem);
+            } else if (selectedItem instanceof String) {
+                listener.onTextSelected((String) selectedItem);
+            }
+
         });
+    }
+
+    public ImageButton getClearButton() {
+        return binding.btnClear;
+    }
+
+    public TextInputLayout getTextInputLayout() {
+        return binding.tilField;
+    }
+
+    public MaterialAutoCompleteTextView getAutoCompleteTextView() {
+        return binding.cboField;
+    }
+
+    public TextInputEditText getEditText() {
+        return binding.edtField;
     }
 
     public void setTreshhold(int treshhold) {
@@ -334,5 +348,13 @@ public class ValidatorInputLayout extends FrameLayout {
 
     public interface OnItemSelectListener {
         void onItemSelected(ValidatorInputLayoutItem selectedItem);
+
+        void onTextSelected(String selectedText);
+    }
+
+    public interface OnIconsClickListener {
+        void onClearButtonClick();
+
+        void onEndIconClick();
     }
 }

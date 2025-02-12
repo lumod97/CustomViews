@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <ImageButton
         android:id="@+id/btnClear"
@@ -17,10 +17,10 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tilField"
+        style="@style/textInputLayoutStyle"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="3dp"
-        style="@style/textInputLayoutStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnClear"
@@ -30,7 +30,15 @@
             android:id="@+id/cboField"
             style="textInputLayoutStyle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtField"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
