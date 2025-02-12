@@ -1,7 +1,9 @@
 package com.myaconsultancy.customviews.ValidatorInputLayout;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.os.Build;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.EditText;
 
@@ -25,6 +27,8 @@ public class Validator {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public boolean validateForm(List<ValidationItem> validationItems) {
+        AttributeSet attrs = null;
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ValidatorInputLayout);
         List<String> errors = new ArrayList<>();
         for (ValidationItem validationItem :
                 validationItems) {

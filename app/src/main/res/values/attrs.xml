@@ -1,25 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ValidatorInputLayout">
-        <attr name="hint" format="string" />
-        <attr name="endIconMode" format="integer" />
-        <attr name="clearIcon" format="integer" />
-        <attr name="btnClearImageResource" format="integer" />
+        <attr name="rightIconMode" format="integer" />
+        <attr name="btnClearImageResource" format="reference" />
         <attr name="clearButtonBackground" format="color" />
-        <attr name="textInputIconDrawable" format="integer" />
+        <attr name="textInputIconDrawable" format="reference" />
         <attr name="textInputHintEnabled" format="boolean" />
         <attr name="textInputHint" format="string" />
-<!--        <attr name="autocompleteAdapter" format="integer" />-->
-<!--        <attr name="autocompleteItems" format="integer" />-->
         <attr name="showDropdownOnFocus" format="boolean" />
-        <attr name="toggleDropDown" format="boolean" />
         <attr name="showKeyboardOnFocus" format="boolean" />
         <attr name="showKeyboardIcon" format="boolean" />
-<!--        <attr name="onItemSelected" format="function" />-->
-        <attr name="treshhold" format="integer" />
-        <attr name="endIconDrawable" format="integer" />
-<!--        <attr name="clearButton" format="integer" />-->
-<!--        <attr name="control" format="integer" />-->
-        <attr name="emptyError" format="string" />
+        <attr name="threshold" format="integer" />
+        <attr name="clearTextAndShowDropdown" format="boolean" />
     </declare-styleable>
 </resources>
