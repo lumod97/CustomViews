@@ -145,9 +145,6 @@ public class ValidatorInputLayout extends FrameLayout {
             } finally {
                 a.recycle(); // Liberar memoria
             }
-
-
-            a.recycle();
         }
     }
 
