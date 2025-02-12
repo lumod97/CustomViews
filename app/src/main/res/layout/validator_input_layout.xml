@@ -20,9 +20,6 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="3dp"
-        app:endIconDrawable="@drawable/ic_search"
-        app:endIconMode="custom"
-        app:hintEnabled="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnClear"
@@ -31,8 +28,7 @@
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/cboField"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Hint" />
+            android:layout_height="match_parent"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
