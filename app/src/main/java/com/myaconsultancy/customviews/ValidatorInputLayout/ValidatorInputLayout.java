@@ -75,6 +75,7 @@ public class ValidatorInputLayout extends FrameLayout {
                 boolean showDropdownOnFocus = a.getBoolean(R.styleable.ValidatorInputLayout_showDropdownOnFocus, false);
                 boolean showKeyboardOnFocus = a.getBoolean(R.styleable.ValidatorInputLayout_showKeyboardOnFocus, false);
                 boolean showKeyboardIcon = a.getBoolean(R.styleable.ValidatorInputLayout_showKeyboardIcon, false);
+                boolean showClearButton = a.getBoolean(R.styleable.ValidatorInputLayout_showClearButton, false);
                 boolean clearTextAndShowDropdown = a.getBoolean(R.styleable.ValidatorInputLayout_clearTextAndShowDropdown, false);
                 int textInputType = a.getInt(R.styleable.ValidatorInputLayout_textInputType, 0);
 
@@ -91,6 +92,7 @@ public class ValidatorInputLayout extends FrameLayout {
 
 //                binding.cboField.setThreshold(threshold);
                 setTreshhold(threshold);
+                setShowClearButton(showClearButton);
 
                 // Aplicar otros atributos a la vista
 //                binding.btnClear.setImageResource(btnClearImageResource);
@@ -159,6 +161,10 @@ public class ValidatorInputLayout extends FrameLayout {
 //    public void setHint(String hint) {
 //        binding.tilField.setHint(hint);
 //    }
+
+    public void setShowClearButton(boolean showClearButton) {
+        binding.btnClear.setVisibility(showClearButton ? View.VISIBLE : View.GONE);
+    }
 
     public void setEndIconMode(int rightIconMode, int textInputIconDrawable) {
 //        binding.tilField.setEndIconMode(endIconMode);

@@ -17,6 +17,7 @@
         <attr name="showKeyboardIcon" format="boolean" />
         <attr name="threshold" format="integer" />
         <attr name="clearTextAndShowDropdown" format="boolean" />
+        <attr name="showClearButton" format="boolean" />
         <attr name="textInputType" format="enum">
             <enum name="text" value="0" />
             <enum name="number" value="1" />
