@@ -95,8 +95,8 @@ public class ValidatorInputLayout extends FrameLayout {
                     setValidators(emptyText, invalidText);
                 }
 
-                binding.cboField.setVisibility(autocompleteTextView ? View.VISIBLE : View.GONE);
-                binding.edtField.setVisibility(autocompleteTextView ? View.GONE : View.VISIBLE);
+//                binding.cboField.setVisibility(autocompleteTextView ? View.VISIBLE : View.GONE);
+//                binding.edtField.setVisibility(autocompleteTextView ? View.GONE : View.VISIBLE);
 
 
                 if (binding.cboField != null) {
@@ -338,9 +338,9 @@ public class ValidatorInputLayout extends FrameLayout {
         return binding.cboField;
     }
 
-    public TextInputEditText getEditText() {
-        return binding.edtField;
-    }
+//    public TextInputEditText getEditText() {
+//        return binding.edtField;
+//    }
 
     public void setTreshhold(int treshhold) {
         binding.cboField.setThreshold(treshhold);
