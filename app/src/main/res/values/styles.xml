@@ -3,7 +3,7 @@
     <style name="CustomViewsTheme" parent="Theme.MaterialComponents.Light">
     </style>
 
-    <style name="textInputLayoutStyle" parent="@style/Widget.Design.TextInputLayout">
+    <style name="textInputLayoutStyle" parent="@style/Widget.AppCompat.EditText">
         <item name="android:background"> @color/float_transparent </item>
     </style>
 

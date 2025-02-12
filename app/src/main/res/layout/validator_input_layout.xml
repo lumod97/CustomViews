@@ -20,6 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_marginStart="3dp"
+        style="@style/textInputLayoutStyle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/btnClear"

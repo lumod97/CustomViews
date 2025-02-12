@@ -203,7 +203,7 @@ public class ValidatorInputLayout extends FrameLayout {
     }
 
     public void setTextInputHint(String hint) {
-        binding.cboField.setHint(hint);
+        binding.tilField.setHint(hint);
     }
 
     public void setAutocompleteAdapter(ValidatorInputLayoutAdapter adapter) {
