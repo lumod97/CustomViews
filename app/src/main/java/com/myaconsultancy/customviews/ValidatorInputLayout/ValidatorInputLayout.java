@@ -1,6 +1,7 @@
 package com.myaconsultancy.customviews.ValidatorInputLayout;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -34,7 +35,7 @@ public class ValidatorInputLayout extends FrameLayout {
 
     public ValidatorInputLayout(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init(context, attrs);
     }
 
     public ValidatorInputLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
@@ -51,6 +52,20 @@ public class ValidatorInputLayout extends FrameLayout {
             parent = (View) parent.getParent();
         }
         return null;
+    }
+
+    private void init(Context context, AttributeSet attrs) {
+        ContextThemeWrapper themeWrapper = new ContextThemeWrapper(context, R.style.CustomViewsTheme);
+        binding = ValidatorInputLayoutBinding.inflate(LayoutInflater.from(themeWrapper), this, true);
+
+        if (attrs != null) {
+            TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ValidatorInputLayout);
+            String hintText = a.getString(R.styleable.ValidatorInputLayout_hint);
+            if (hintText != null) {
+                binding.tilField.setHint(hintText);
+            }
+            a.recycle();
+        }
     }
 
     private void init(Context context) {
