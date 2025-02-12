@@ -6,11 +6,6 @@ public class ValidatorInputLayoutItem {
     private String secondaryId;
 
     // Constructor
-    public ValidatorInputLayoutItem(String id, String descripcion) {
-        this.id = id;
-        this.descripcion = descripcion;
-    }
-
     public ValidatorInputLayoutItem(String id, String descripcion, String secondaryId) {
         this.id = id;
         this.descripcion = descripcion;

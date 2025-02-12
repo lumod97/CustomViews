@@ -22,7 +22,6 @@ import androidx.core.content.ContextCompat;
 import com.github.lumod97.customviews.R;
 import com.github.lumod97.customviews.databinding.ValidatorInputLayoutBinding;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
@@ -117,7 +116,7 @@ public class ValidatorInputLayout extends FrameLayout {
                 clearTextAndShowDropdown(clearTextAndShowDropdown);
                 switch (textInputType) {
                     case 1:
-                        binding.cboField.setInputType(InputType.TYPE_CLASS_NUMBER);
+                        binding.cboField.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
                         break;
                     case 2:
                         binding.cboField.setInputType(InputType.TYPE_CLASS_PHONE);
@@ -225,7 +224,7 @@ public class ValidatorInputLayout extends FrameLayout {
     }
 
     public void showKeyboardOnFocus(boolean showKeyboardOnFocus) {
-        binding.cboField.setShowSoftInputOnFocus(false);
+        binding.cboField.setShowSoftInputOnFocus(showKeyboardOnFocus);
     }
 
     public void showKeyboardIcon(boolean showKeyboardIcon) {
@@ -291,11 +290,11 @@ public class ValidatorInputLayout extends FrameLayout {
         });
     }
 
-    public String getEmptyText(){
+    public String getEmptyText() {
         return emptyText;
     }
 
-    public String getInvalidText(){
+    public String getInvalidText() {
         return invalidText;
     }
 
