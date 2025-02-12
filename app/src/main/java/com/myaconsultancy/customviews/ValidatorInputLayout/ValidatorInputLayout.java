@@ -26,9 +26,6 @@ public class ValidatorInputLayout extends FrameLayout {
     private OnItemSelectListener listener;
     private boolean showDropdown = false;
     private ValidatorInputLayoutBinding binding;
-//    private TextInputLayout binding.tilField;
-//    private ImageButton binding.btnClear;
-//    private MaterialAutoCompleteTextView binding.cboField;
 
     public ValidatorInputLayout(Context context) {
         super(context);
@@ -61,10 +58,6 @@ public class ValidatorInputLayout extends FrameLayout {
         ContextThemeWrapper themeWrapper = new ContextThemeWrapper(context, R.style.CustomViewsTheme);
         // Inflar el layout usando el nuevo contexto
         binding = ValidatorInputLayoutBinding.inflate(LayoutInflater.from(themeWrapper), this, true);
-//        LayoutInflater.from(context).inflate(R.layout.validator_input_layout, this, true);
-//        binding.tilField = findViewById(R.id.binding.tilField);
-//        binding.btnClear = findViewById(R.id.binding.btnClear);
-//        binding.cboField = findViewById(R.id.binding.cboField);
     }
 
     public void setHint(String hint) {

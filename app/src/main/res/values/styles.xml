@@ -2,4 +2,9 @@
 <resources>
     <style name="CustomViewsTheme" parent="Theme.MaterialComponents.Light">
     </style>
+
+    <style name="textInputLayoutStyle" parent="@style/Widget.Design.TextInputLayout">
+        <item name="android:background"> @color/float_transparent </item>
+    </style>
+
 </resources>
