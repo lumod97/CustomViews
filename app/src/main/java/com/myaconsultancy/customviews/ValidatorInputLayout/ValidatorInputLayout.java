@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -23,8 +24,11 @@ import java.util.List;
 public class ValidatorInputLayout extends FrameLayout {
 
     private OnItemSelectListener listener;
-    private ValidatorInputLayoutBinding binding;
     private boolean showDropdown = false;
+    private ValidatorInputLayoutBinding binding;
+//    private TextInputLayout binding.tilField;
+//    private ImageButton binding.btnClear;
+//    private MaterialAutoCompleteTextView binding.cboField;
 
     public ValidatorInputLayout(Context context) {
         super(context);
@@ -53,8 +57,14 @@ public class ValidatorInputLayout extends FrameLayout {
     }
 
     private void init(Context context) {
-        binding = ValidatorInputLayoutBinding.inflate(LayoutInflater.from(context), this, true);
+        // Crear un nuevo contexto con el tema de la librería
+        ContextThemeWrapper themeWrapper = new ContextThemeWrapper(context, R.style.CustomViewsTheme);
+        // Inflar el layout usando el nuevo contexto
+        binding = ValidatorInputLayoutBinding.inflate(LayoutInflater.from(themeWrapper), this, true);
 //        LayoutInflater.from(context).inflate(R.layout.validator_input_layout, this, true);
+//        binding.tilField = findViewById(R.id.binding.tilField);
+//        binding.btnClear = findViewById(R.id.binding.btnClear);
+//        binding.cboField = findViewById(R.id.binding.cboField);
     }
 
     public void setHint(String hint) {
