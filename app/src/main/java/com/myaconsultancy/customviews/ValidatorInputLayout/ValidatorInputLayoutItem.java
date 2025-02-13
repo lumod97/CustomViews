@@ -36,4 +36,9 @@ public class ValidatorInputLayoutItem {
     public void setSecondaryId(String secondaryId) {
         this.secondaryId = secondaryId;
     }
+
+    @Override
+    public String toString() {
+        return descripcion;  // Esto es lo que se mostrará en el dropdown
+    }
 }
