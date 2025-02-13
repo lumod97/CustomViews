@@ -252,6 +252,8 @@ public class ValidatorInputLayout extends FrameLayout {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void setValidators(String emptyText, String invalidText) {
+        final boolean[] isUserInteracted = {false}; // Detecta interacción del usuario
+
         binding.cboField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -260,11 +262,17 @@ public class ValidatorInputLayout extends FrameLayout {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString().isEmpty()) {
-                    binding.tilField.setError(emptyText == null ? emptyText : "Campo requerido");
-                } else {
-                    binding.tilField.setError(null);
-                    binding.tilField.setErrorEnabled(false);
+                if (!isUserInteracted[0] && !s.toString().isEmpty()) {
+                    isUserInteracted[0] = true; // Marca que el usuario ya editó el campo
+                }
+
+                if (isUserInteracted[0]) { // Solo valida si el usuario ha interactuado
+                    if (s.toString().isEmpty()) {
+                        binding.tilField.setError(emptyText != null ? emptyText : "Campo requerido");
+                    } else {
+                        binding.tilField.setError(null);
+                        binding.tilField.setErrorEnabled(false);
+                    }
                 }
             }
 
@@ -274,6 +282,7 @@ public class ValidatorInputLayout extends FrameLayout {
             }
         });
     }
+
 
     public void setClearButtonClickListener(OnIconsClickListener listener) {
         binding.btnClear.setOnClickListener(v -> {
